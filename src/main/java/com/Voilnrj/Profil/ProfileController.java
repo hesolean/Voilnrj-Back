@@ -15,12 +15,12 @@ public class ProfileController {
 
     @GetMapping("")
     public List<Profil> findAll() {
-        return (List<Profil>) profileService.findAll();
+        return profileService.findAll();
     }
 
     @GetMapping("/{id}")
     public Profil findById(@PathVariable("id") Long id) {
-        return ProfileService.findById(id);
+        return profileService.findById(id);
     }
 
     @PostMapping("")

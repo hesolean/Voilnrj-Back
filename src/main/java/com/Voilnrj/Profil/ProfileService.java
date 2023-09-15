@@ -1,6 +1,7 @@
 package com.Voilnrj.Profil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,23 +11,16 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@RequiredArgsConstructor
 public class ProfileService {
-    private static ProfilRepository profilRepository;
-    private static ObjectMapper objectMapper;
-    public ProfileService(ProfilRepository profilRepository, ObjectMapper objectMapper) {
-        this.profilRepository = profilRepository;
-        this.objectMapper = objectMapper;
-    }
+    private final ProfilRepository profilRepository;
 
-    public ProfilRepository findAll(){
-        List<Profil> profils = profilRepository.findAll();
-        return (ProfilRepository) profils.stream().map(profil -> objectMapper.convertValue(profil, Profil.class)).toList();
+    public List<Profil> findAll(){
+        return profilRepository.findAll();
     }
-    public static Profil findById(Long id){
-        Profil profil = profilRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profil not found")
-        );
-        return objectMapper.convertValue(profil, Profil.class);
+    public Profil findById(Long id){
+        return profilRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profil not found"));
     }
 
     public Profil save(Profil profil){

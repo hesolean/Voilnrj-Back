@@ -7,52 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @SpringBootApplication
-@RestController
-@RequestMapping("api/v1/customers")
 public class Main {
-    private final CustomerRepository customerRepository;
-
-    public Main(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
-    @GetMapping
-    public List<Customer> getCustomers(){
-        return customerRepository.findAll();
-    }
-
-    record NewCustomerRequest(
-            String name,
-            String email,
-            Integer age
-    ) {
-
-    }
-
-    @PostMapping
-    public void addCustomer(@RequestBody NewCustomerRequest request){
-    Customer customer = new Customer();
-    customer.setName(request.name());
-    customer.setEmail(request.email());
-    customer.setAge(request.age());
-    customerRepository.save(customer);
-    }
-
-    @DeleteMapping("{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Integer id) {
-        customerRepository.deleteById(id);
-    }
-
-//    @PutMapping("{customerId}")
-//    public void updateCustomer(@PathVariable("customerId") Integer id, @RequestBody NewCustomerRequest request) {
-//        Customer customer = customerRepository.getReferenceById(id);
-//        customer.setName(request.name());
-//        customer.setEmail(request.email());
-//        customer.setAge(request.age());
-//        customerRepository.save(customer);
-//    }
-    
+//    lancer docker, puis le terminal et taper docker-compose up -d
+// installer postgres for jpa
+    // créer la database sur le terminal : docker ps pour avoir l'id du container
+    //puis taper: docker exec -it postgres bash pour arriver aux commandes du container
+    // puis taper: psql -U Voilnrj
+    // puis taper : \l pour avoir la liste des dtb
+    // puis taper : CREATE DATABASE profils;
+    // pour se connecter à la db, il faut taper : \c profils
 }
